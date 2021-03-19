@@ -2,13 +2,19 @@ import { Button, Paper, TextField, Typography } from "@material-ui/core";
 import React, { useState } from "react";
 import useStyles from "./styles";
 import FileBase from "react-file-base64"; //convert image to a base 64 string. more info at #imp-js
+import { useDispatch } from "react-redux";
+import { createPost } from "../../actions/posts";
 
 const Form = () => {
 	const [postData, setPostData] = useState({ creator: "", title: "", message: "", tags: "", selectedFile: "" });
 
 	const classes = useStyles();
+	const dispatch = useDispatch();
 
-	const handleSubmit = () => {};
+	const handleSubmit = e => {
+		e.preventDefault();
+		dispatch(createPost(postData));
+	};
 
 	const clear = () => {};
 
