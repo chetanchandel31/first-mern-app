@@ -1,4 +1,8 @@
-import PostMessage from "../models/postMessage.js";
+import PostMessage from "../models/postMessage.js"; //our model
+import mongoose from "mongoose";
+// export const getPosts = (req, res) => {
+// 	res.send("it's working..");
+// };
 
 export const getPosts = async (req, res) => {
 	try {
@@ -9,10 +13,6 @@ export const getPosts = async (req, res) => {
 		res.status(404).json({ messages: err.message });
 	}
 };
-
-// export const getPosts = (req, res) => {
-// 	res.send("it's working..");
-// };
 
 export const createPosts = async (req, res) => {
 	//with POST requests we have access to req.body
@@ -25,5 +25,18 @@ export const createPosts = async (req, res) => {
 		res.status(201).json(newPost);
 	} catch (err) {
 		res.status(409).json({ message: err.message });
+	}
+};
+
+export const updatePosts = async (req, res) => {
+	const { id: _id } = req.params;
+	const post = req.body;
+
+	if (!mongoose.Types.ObjectId.isValid(_id)) return res.status(404).send("No post with that id");
+	try {
+		const updatedPost = await PostMessage.findByIdAndUpdate(_id, post, { new: true }); //third arg to receive the updated version of post after updating
+		res.json(updatedPost);
+	} catch (error) {
+		res.json({ message: error.message });
 	}
 };

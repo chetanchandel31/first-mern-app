@@ -1,29 +1,41 @@
 import { Button, Paper, TextField, Typography } from "@material-ui/core";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import useStyles from "./styles";
 import FileBase from "react-file-base64"; //convert image to a base 64 string. more info at #imp-js
-import { useDispatch } from "react-redux";
-import { createPost } from "../../actions/posts";
+import { useDispatch, useSelector } from "react-redux";
+import { createPost, updatePost } from "../../actions/posts";
 
-const Form = () => {
+const Form = ({ currentId, setCurrentId }) => {
 	const [postData, setPostData] = useState({ creator: "", title: "", message: "", tags: "", selectedFile: "" });
-
+	const post = useSelector(state => (currentId ? state.posts.find(post => post._id === currentId) : null));
 	const classes = useStyles();
 	const dispatch = useDispatch();
 
+	useEffect(() => {
+		if (post) setPostData(post); //just a note, post will contain id and createdAt properties which aren't included in our initial state
+	}, [post]);
+
 	const handleSubmit = e => {
 		e.preventDefault();
-		dispatch(createPost(postData));
+
+		if (currentId) {
+			dispatch(updatePost(currentId, postData));
+		} else {
+			dispatch(createPost(postData));
+		}
+		clear();
 	};
 
-	const clear = () => {};
-
+	const clear = () => {
+		setCurrentId(null);
+		setPostData({ creator: "", title: "", message: "", tags: "", selectedFile: "" });
+	};
 	// Paper is like a div with whitish background
 	//try to map textfields while re-factoring?
 	return (
 		<Paper className={classes.paper}>
 			<form autoComplete="off" noValidate className={`${classes.root} ${classes.form}`} onSubmit={handleSubmit}>
-				<Typography variant="h6">Creating a memory</Typography>
+				<Typography variant="h6">{currentId ? "Editing" : "Creating"} a memory</Typography>
 				<TextField
 					name="creator"
 					variant="outlined"
