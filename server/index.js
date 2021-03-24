@@ -1,20 +1,20 @@
 import express from "express"; //for creating routing
 import bodyParser from "body-parser"; //for converting images/sending post requests?
 import mongoose from "mongoose";
-import cors from "cors"; //cross-origin requests?
+import cors from "cors"; //cross-origin requests? to access something outside our server from our server
 import postRoutes from "./routes/posts.js";
 
 // initialize app
 const app = express();
 
 // setting up body parser
-app.use(express.json({ limit: "30mb", extended: "true" }));
-app.use(express.urlencoded({ limit: "30mb", extended: "true" }));
+app.use(express.json({ limit: "30mb", extended: "true" })); //allows us to parse JSON because server will be sending and receiving JSON
+app.use(express.urlencoded({ limit: "30mb", extended: "true" })); //might be for url encoded ids?
 //setting-up cors
 app.use(cors());
 
 //use express to connect router to our application
-app.use("/posts", postRoutes); //every route inside postRoutes will start with /posts
+app.use("/posts", postRoutes); //every route inside postRoutes will start with ROOT_URL/posts
 //this should always come below app.use(cors())
 
 //http://mongodb.com/cloud/atlas
