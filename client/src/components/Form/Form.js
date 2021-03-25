@@ -67,7 +67,7 @@ const Form = ({ currentId, setCurrentId }) => {
 					label="Tags"
 					fullWidth
 					value={postData.tags}
-					onChange={({ target }) => setPostData(prevState => ({ ...prevState, tags: target.value }))}
+					onChange={({ target }) => setPostData(prevState => ({ ...prevState, tags: target.value.split(/[\s,]+/).join(" ") }))}
 				/>
 				<div className={classes.fileInput}>
 					<FileBase type="file" multiple={false} onDone={({ base64 }) => setPostData({ ...postData, selectedFile: base64 })} />
