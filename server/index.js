@@ -19,6 +19,8 @@ app.use(cors());
 app.use("/posts", postRoutes); //every route inside postRoutes will start with ROOT_URL/posts
 //this should always come below app.use(cors())
 
+app.get("/", (req, res) => res.send("hello from my first mern app's backend"));
+
 //http://mongodb.com/cloud/atlas
 // const CONNECTION_URL = "mongodb+srv://chetan:chetan123@cluster0.3aezh.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 const PORT = process.env.PORT || 5000;

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const url = "http://localhost:5000/posts/"; //having https instead of http here was causing an issue
+const url = "https://first-mern-project31.herokuapp.com/posts/";
 
 export const fetchPosts = () => axios.get(url);
 
