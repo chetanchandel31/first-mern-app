@@ -9,7 +9,7 @@ const Home = () => {
 	const [currentId, setCurrentId] = useState(null);
 	const dispatch = useDispatch();
 
-	useEffect(() => dispatch(getPosts()), [dispatch, currentId]);
+	useEffect(() => dispatch(getPosts()), [dispatch]);
 	return (
 		<Grow in>
 			<Container>

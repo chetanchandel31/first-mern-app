@@ -25,12 +25,12 @@ const Post = ({ post, currentId, setCurrentId }) => {
 			<div className={classes.details}>
 				<Typography variant="body2" color="textSecondary">
 					{post.tags[0]
-						.split(", ")
+						.split(" ")
 						.map(tag => {
 							if (tag.charAt(0) !== "#") return `#${tag}`;
 							return tag;
 						})
-						.join(", ")}
+						.join(" ")}
 				</Typography>
 			</div>
 			<Typography className={classes.title} variant="h5" gutterBottom>
