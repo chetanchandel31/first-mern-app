@@ -6,9 +6,9 @@ const postSchema = mongoose.Schema({
 	creator: String,
 	tags: [String], //because of this frontend can send tags as string but they are encapsulated in array inside database
 	selectedFile: String,
-	likeCount: {
-		type: Number,
-		default: 0,
+	likes: {
+		type: [String],
+		default: [],
 	},
 	createdAt: {
 		type: Date,
