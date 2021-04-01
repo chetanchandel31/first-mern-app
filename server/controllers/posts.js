@@ -50,7 +50,7 @@ export const deletePost = async (req, res) => {
 		await PostMessage.findByIdAndRemove(id);
 		res.send(`post id: ${id} deleted`);
 	} catch (error) {
-		console.log(error);
+		res.json({ message: error.message });
 	}
 };
 

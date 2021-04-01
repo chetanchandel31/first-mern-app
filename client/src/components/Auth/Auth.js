@@ -8,19 +8,30 @@ import { useHistory } from "react-router-dom";
 import Input from "./Input";
 import useStyles from "./styles";
 import Icon from "./icon";
+// import {signin, signup} from "../../actions/auth";
 
 const Auth = () => {
 	const classes = useStyles();
 	const [showPassword, setShowPassword] = useState(false);
 	const [isSignup, setIsSignUp] = useState(false);
+	const [formData, setFormData] = useState({ firstName: "", lastName: "", email: "", password: "", confirmPassword: "" });
 	const dispatch = useDispatch();
 	const history = useHistory();
 
 	const handleShowPassword = () => setShowPassword(prevShowPassword => !prevShowPassword);
 
-	const handleSubmit = () => {};
+	const handleSubmit = e => {
+		e.preventDefault();
+		// if (signUp) {
+		// 	dispatch(signup(formData, history)); //form data is to be stored in database, history will be used to redirect to root url
+		// } else {
+		// 	dispatch(signin(formData, history));
+		// }
+	};
 
-	const handleChange = () => {};
+	const handleChange = e => {
+		setFormData({ ...formData, [e.target.name]: e.target.value });
+	};
 
 	const switchMode = () => {
 		setIsSignUp(prevState => !prevState);
@@ -55,7 +66,7 @@ const Auth = () => {
 						{isSignup && (
 							<>
 								<Input name="firstName" label="First Name" handleChange={handleChange} autoFocus half />
-								<Input name="firstName" label="First Name" handleChange={handleChange} half />
+								<Input name="lastName" label="Last Name" handleChange={handleChange} half />
 							</>
 						)}
 						<Input name="email" label="Email Address" handleChange={handleChange} type="email" />

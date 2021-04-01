@@ -1,8 +1,9 @@
 import express from "express"; //for creating routing
-import bodyParser from "body-parser"; //for converting images/sending post requests?
+// import bodyParser from "body-parser"; //for converting images/sending post requests?
 import mongoose from "mongoose";
 import cors from "cors"; //cross-origin requests? to access something outside our server from our server
 import postRoutes from "./routes/posts.js";
+import userRoutes from "./routes/users.js";
 import dotenv from "dotenv";
 
 // initialize app
@@ -17,6 +18,7 @@ app.use(cors());
 
 //use express to connect router to our application
 app.use("/posts", postRoutes); //every route inside postRoutes will start with ROOT_URL/posts
+app.use("/user", userRoutes);
 //this should always come below app.use(cors())
 
 app.get("/", (req, res) => res.send("hello from my first mern app's backend"));
