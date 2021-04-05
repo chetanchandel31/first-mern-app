@@ -19,11 +19,11 @@ const auth = async (req, res, next) => {
 		if (token && isCustomAuth) {
 			decodedData = jwt.verify(token, "test");
 
-			req.userId = decodedData?.id; //optional chaining because there might be no token in req
+			req.userId = decodedData && decodedData.id; //optional chaining because there might be no token in req
 		} else {
 			decodedData = jwt.verify(token);
 
-			req.userId = decodedData?.sub; //sub is google's token's unique id for all users
+			req.userId = decodedData && decodedData.sub; //sub is google's token's unique id for all users
 		}
 
 		next();

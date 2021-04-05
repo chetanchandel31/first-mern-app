@@ -35,9 +35,9 @@ const Navbar = () => {
 				<img className={classes.image} src={memories} alt="icon" height="60" />
 			</div>
 			<Toolbar className={classes.toolbar}>
-				{user ? (
+				{user?.result ? (
 					<div className={classes.profile}>
-						<Avatar className={classes.purple} src={user.result.imageURl} alt={user.result.name}>
+						<Avatar className={classes.purple} src={user?.result?.imageUrl} alt={user.result.name}>
 							{user.result.name.charAt(0)}
 						</Avatar>
 						<Typography className={classes.userName} variant="h6">

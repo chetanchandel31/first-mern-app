@@ -8,7 +8,7 @@ import { useHistory } from "react-router-dom";
 import Input from "./Input";
 import useStyles from "./styles";
 import Icon from "./icon";
-// import {signin, signup} from "../../actions/auth";
+import { signin, signup } from "../../actions/auth";
 
 const Auth = () => {
 	const classes = useStyles();
@@ -22,11 +22,11 @@ const Auth = () => {
 
 	const handleSubmit = e => {
 		e.preventDefault();
-		// if (signUp) {
-		// 	dispatch(signup(formData, history)); //form data is to be stored in database, history will be used to redirect to root url
-		// } else {
-		// 	dispatch(signin(formData, history));
-		// }
+		if (isSignup) {
+			dispatch(signup(formData, history)); //form data is to be stored in database, history will be used to redirect to root url
+		} else {
+			dispatch(signin(formData, history));
+		}
 	};
 
 	const handleChange = e => {
