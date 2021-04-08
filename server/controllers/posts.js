@@ -56,7 +56,7 @@ export const deletePost = async (req, res) => {
 
 export const likePost = async (req, res) => {
 	const { id } = req.params;
-	//check is user is authenticated
+	//check if user is authenticated
 	if (!req.userId) return res.json({ message: "user not authenticated" });
 	if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send("No post with that id");
 
