@@ -18,7 +18,7 @@ export const getPosts = async (req, res) => {
 export const createPosts = async (req, res) => {
 	//with POST requests we have access to req.body
 	const post = req.body; //post will come from front-end
-	const newPost = new PostMessage(post); //new model based on request we received from front-end?
+	const newPost = new PostMessage({ ...post, creator: req.userId, createdAt: new Date().toISOString() }); //new model based on request we received from front-end?
 
 	try {
 		await newPost.save(); //Saves this document by inserting a new document into the database

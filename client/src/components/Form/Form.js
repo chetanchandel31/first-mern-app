@@ -6,10 +6,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { createPost, updatePost } from "../../actions/posts";
 
 const Form = ({ currentId, setCurrentId }) => {
-	const [postData, setPostData] = useState({ creator: "", title: "", message: "", tags: "", selectedFile: "" });
+	const [postData, setPostData] = useState({ title: "", message: "", tags: "", selectedFile: "" });
 	const post = useSelector(state => (currentId ? state.posts.find(post => post._id === currentId) : null));
 	const classes = useStyles();
 	const dispatch = useDispatch();
+	const user = JSON.parse(localStorage.getItem("profile"));
 
 	useEffect(() => {
 		if (post) setPostData(post); //just a note, post will contain id and createdAt properties which aren't included in our initial state
@@ -20,31 +21,34 @@ const Form = ({ currentId, setCurrentId }) => {
 		// console.log("sending", postData);
 
 		if (currentId) {
-			dispatch(updatePost(currentId, postData));
+			dispatch(updatePost(currentId, { ...postData, name: user?.result?.name }));
 		} else {
-			dispatch(createPost(postData));
+			dispatch(createPost({ ...postData, name: user?.result?.name }));
 		}
 		clear();
 	};
 
 	const clear = () => {
 		setCurrentId(null);
-		setPostData({ creator: "", title: "", message: "", tags: "", selectedFile: "" });
+		setPostData({ title: "", message: "", tags: "", selectedFile: "" });
 	};
 	// Paper is like a div with whitish background
 	//try to map textfields while re-factoring?
+
+	if (!user?.result?.name) {
+		return (
+			<Paper className={classes.paper}>
+				<Typography variant="h6" align="center">
+					Sign in to create posts and like other's posts
+				</Typography>
+			</Paper>
+		);
+	}
+
 	return (
 		<Paper className={classes.paper}>
 			<form autoComplete="off" noValidate className={`${classes.root} ${classes.form}`} onSubmit={handleSubmit}>
 				<Typography variant="h6">{currentId ? "Editing" : "Creating"} a memory</Typography>
-				<TextField
-					name="creator"
-					variant="outlined"
-					label="Creator"
-					fullWidth
-					value={postData.creator}
-					onChange={({ target }) => setPostData(prevState => ({ ...prevState, creator: target.value }))}
-				/>
 				<TextField
 					name="title"
 					variant="outlined"
